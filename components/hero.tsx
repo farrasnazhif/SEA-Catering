@@ -36,7 +36,7 @@ const specialities = [
 const Hero = () => {
   return (
     <>
-      <section className="bg-cover bg-center text-white pb-12 pt-28 relative overflow-hidden bg-slate-100 ">
+      <section className="bg-cover bg-center text-white p-8 relative overflow-hidden bg-slate-100 ">
         <div
           className="md:absolute inset-0 bg-cover bg-center scale-x-[-1]"
           style={{
@@ -44,7 +44,7 @@ const Hero = () => {
           }}
         />
 
-        <div className=" mx-auto px-6 relative z-10 flex-start wrapper text-black">
+        <div className=" mx-auto px-6 relative flex-start wrapper text-black">
           <div className="md:w-2/3 w-full flex flex-col gap-10">
             <h1
               className={`${anton.className} md:text-7xl text-5xl md:text-start text-center font-bold uppercase`}
