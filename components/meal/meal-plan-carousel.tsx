@@ -11,6 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import PricingPlanButton from "../ui/pricing-plan-button";
 
 const plans = [
   {
@@ -79,11 +80,7 @@ const MealPlanCarousel = () => {
               <p className="text-gray-700 text-sm">{subtitle}</p>
             </div>
           ))}
-          <Link href="/product">
-            <Button className="text-lg p-6 font-semibold mt-4">
-              Explore More
-            </Button>
-          </Link>
+          <PricingPlanButton className="mt-2" />
         </div>
       </div>
     </div>

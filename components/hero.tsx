@@ -3,6 +3,7 @@ import { Anton } from "next/font/google";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import PricingPlanButton from "./ui/pricing-plan-button";
 
 const anton = Anton({
   subsets: ["latin"],
@@ -69,11 +70,7 @@ const Hero = () => {
             </ul>
 
             <div className="md:flex-start flex-center">
-              <Link href="/product">
-                <Button className="text-lg p-6 font-semibold ">
-                  Explore More
-                </Button>
-              </Link>
+              <PricingPlanButton />
             </div>
           </div>
         </div>
@@ -106,11 +103,7 @@ const Hero = () => {
                 </div>
               ))}
             </div>
-            <Link href="/product">
-              <Button className="text-lg p-6 font-semibold">
-                Explore More
-              </Button>
-            </Link>
+            <PricingPlanButton />
           </div>
         </div>
       </section>
