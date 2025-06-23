@@ -2,8 +2,6 @@
 
 import { CheckCheck } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import { Button } from "../ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -38,10 +36,8 @@ const plans = [
 ];
 
 const MealPlanCarousel = () => {
-  const firstSpeciality = plans[0];
-
   return (
-    <div className="mx-auto px-6 relative wrapper text-black mt-4">
+    <div className="mx-auto px-6 relative wrapper text-black mt-8 mb-8">
       <div className="flex flex-col lg:flex-row items-start gap-6 max-w-5xl mx-auto">
         {/* left */}
         <div className="lg:w-1/2 w-full">
@@ -60,6 +56,7 @@ const MealPlanCarousel = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
+
             <CarouselPrevious className="hidden sm:flex left-2 top-1/2 -translate-y-1/2 z-10" />
             <CarouselNext className="hidden sm:flex right-2 top-1/2 -translate-y-1/2 z-10" />
           </Carousel>
@@ -80,7 +77,9 @@ const MealPlanCarousel = () => {
               <p className="text-gray-700 text-sm">{subtitle}</p>
             </div>
           ))}
-          <PricingPlanButton className="mt-2" />
+          <div className="lg:flex-start flex-center">
+            <PricingPlanButton className="mt-4 lg:mt-3 " />
+          </div>
         </div>
       </div>
     </div>

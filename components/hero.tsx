@@ -1,7 +1,5 @@
 import { CheckCheck } from "lucide-react";
 import { Anton } from "next/font/google";
-import Link from "next/link";
-import { Button } from "./ui/button";
 import Image from "next/image";
 import PricingPlanButton from "./ui/pricing-plan-button";
 
@@ -76,7 +74,7 @@ const Hero = () => {
         </div>
       </section>
       <section>
-        <div className=" mx-auto px-6 relative z-10 wrapper text-black mt-12">
+        <div className=" mx-auto px-6 relative z-10 wrapper text-black mt-4 ">
           <div className="w-full flex flex-center flex-col gap-8">
             <h1 className="text-2xl  font-bold flex-center text-center">
               Healthy Meals, Anytime, Anywhere
@@ -103,7 +101,7 @@ const Hero = () => {
                 </div>
               ))}
             </div>
-            <PricingPlanButton />
+            <PricingPlanButton className="mb-8" />
           </div>
         </div>
       </section>
