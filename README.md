@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 First, you need to install dependencies and set your env configuration:
 
-- Install dependencies by running `npm install` on your terminal.
+- Install dependencies by running **`npm install`** on your terminal.
 
 - Set your env configuration by creating `.env` file. Make sure you don't create the file inside the `app` directory.
 - This is how you will set you `.env` file.
