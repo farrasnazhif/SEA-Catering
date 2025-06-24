@@ -7,7 +7,8 @@ First, you need to install dependencies and set your env configuration:
 1. Install dependencies by running ```npm install``` on your terminal.
 
 2. Set your env configuration by creating `.env` file. Make sure you don't create the file inside the `app` directory.
-- This is how you will set you `.env` file.
+- Copy this to your `.env` file. Besides `http://localhost:3000`, Don't forget to change all the dependencies inside it,
+  
 ```c
 NEXT_PUBLIC_APP_NAME=<yourappname>
 NEXT_PUBLIC_APP_DESCRIPTION=<yourappdescription>
