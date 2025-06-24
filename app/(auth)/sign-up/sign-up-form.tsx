@@ -34,10 +34,7 @@ const SignUpForm = () => {
       <input type="hidden" name="callbackUrl" value={callbackUrl} />
 
       <div className="space-y-6 ">
-        <div className="w-[24rem]">
-          {/* <Label htmlFor="name" className="mb-2">
-            Username
-          </Label> */}
+        <div>
           <Input
             id="name"
             name="name"
@@ -50,10 +47,7 @@ const SignUpForm = () => {
           />
         </div>
 
-        <div className="w-[24rem]">
-          {/* <Label htmlFor="email" className="mb-2">
-            Email
-          </Label> */}
+        <div>
           <Input
             id="email"
             name="email"
@@ -66,9 +60,6 @@ const SignUpForm = () => {
           />
         </div>
         <div>
-          {/* <Label htmlFor="password" className="mb-2">
-            Password
-          </Label> */}
           <Input
             id="password"
             name="password"
@@ -81,9 +72,6 @@ const SignUpForm = () => {
           />
         </div>
         <div>
-          {/* <Label htmlFor="confirmPassword" className="mb-2">
-            Confirm Password
-          </Label> */}
           <Input
             id="confirmPassword"
             name="confirmPassword"

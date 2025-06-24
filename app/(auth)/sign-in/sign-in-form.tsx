@@ -34,7 +34,7 @@ const SignInForm = () => {
     <form action={action}>
       <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <div className="space-y-6 ">
-        <div className="w-[24rem]">
+        <div>
           <Input
             id="email"
             name="email"
