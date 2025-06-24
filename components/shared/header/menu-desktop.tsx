@@ -6,7 +6,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { PhoneCall } from "lucide-react";
+import { PhoneCall, UserIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -15,7 +15,7 @@ const navigations = [
   { name: "Subscription", href: "/subscription" },
 ];
 
-const DesktopNavigationMenu = () => {
+const DesktopNavigationMenu = async () => {
   return (
     <nav className="hidden lg:flex w-full max-w-xs">
       <div className="flex items-center gap-4">

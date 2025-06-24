@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import {
   Accordion,
   AccordionContent,
@@ -12,13 +13,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { signOutUser } from "@/lib/actions/user.action";
 import { APP_NAME } from "@/lib/constants";
 import { BadgeCheck, MenuIcon, PhoneCall, UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const MobileNavigationMenu = () => {
+const MobileNavigationMenu = async () => {
+  const session = await auth();
+  const firstName = session?.user?.name?.split(" ")?.[0] ?? "User";
+
   return (
     <nav className="md:hidden">
       <Sheet>
@@ -31,39 +36,43 @@ const MobileNavigationMenu = () => {
         <SheetContent className="flex flex-col items-start">
           <SheetTitle>Menu</SheetTitle>
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="user">
-              <AccordionTrigger>
-                <div className="hover:text-slate-500 transition-all flex items-center gap-2">
-                  <UserIcon className="h-4 w-4" />
-                  <p className="text-sm font-medium ">Hi, User</p>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <Link
-                  href="/user/profile"
-                  className="block px-2 py-1 text-sm hover:bg-slate-50 rounded"
-                >
-                  User Profile
-                </Link>
-              </AccordionContent>
-              <AccordionContent>
-                <Link
-                  href="/user/plan"
-                  className="block px-2 py-1 text-sm hover:bg-slate-50 rounded"
-                >
-                  Your Plan
-                </Link>
-              </AccordionContent>
-              <AccordionContent>
-                <Button
-                  type="submit"
-                  variant="default"
-                  className="w-full text-sm px-2 py-1 hover:bg-slate-700 block text-center"
-                >
-                  Login
-                </Button>
-              </AccordionContent>
-            </AccordionItem>
+            {session && (
+              <AccordionItem value="user">
+                <AccordionTrigger>
+                  <div className="hover:text-slate-500 transition-all flex items-center gap-2">
+                    <UserIcon className="h-4 w-4" />
+                    <p className="text-sm font-medium">Hi, {firstName}</p>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <Link
+                    href="/user/profile"
+                    className="block px-2 py-1 text-sm hover:bg-slate-50 rounded"
+                  >
+                    User Profile
+                  </Link>
+                </AccordionContent>
+                <AccordionContent>
+                  <Link
+                    href="/user/plan"
+                    className="block px-2 py-1 text-sm hover:bg-slate-50 rounded"
+                  >
+                    My Plan
+                  </Link>
+                </AccordionContent>
+                <AccordionContent>
+                  <form action={signOutUser} className="w-full ">
+                    <Button
+                      type="submit"
+                      variant="default"
+                      className="w-full text-sm px-2 py-1 hover:bg-slate-700 block text-center"
+                    >
+                      Sign Out
+                    </Button>
+                  </form>
+                </AccordionContent>
+              </AccordionItem>
+            )}
 
             <AccordionItem value="new">
               <AccordionTrigger>
@@ -107,6 +116,18 @@ const MobileNavigationMenu = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+
+          {/* Sign In Button shown only when user is not logged in */}
+          {!session && (
+            <Link href="/sign-in" className="w-full mt-4">
+              <Button
+                variant="default"
+                className="w-full text-sm px-2 py-1 hover:bg-slate-700 block text-center"
+              >
+                Sign In
+              </Button>
+            </Link>
+          )}
 
           <Link href="/" className="my-8">
             <Image

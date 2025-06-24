@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import Menu from "./menu";
 import { Button } from "@/components/ui/button";
+import UserButton from "./user-button";
 
 const Header = () => {
   return (
@@ -18,7 +19,7 @@ const Header = () => {
         <Menu />
 
         <div className="hidden md:flex  max-w-xs">
-          <Button>Login</Button>
+          <UserButton />
         </div>
       </div>
     </header>
