@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,12 +11,13 @@ import { PhoneCall, UserIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-const navigations = [
-  { name: "Home", href: "/" },
-  { name: "Subscription", href: "/subscription" },
-];
+const navigations = [{ name: "Home", href: "/" }];
 
 const DesktopNavigationMenu = async () => {
+  const session = await auth();
+
+  const subscriptionHref = session ? "/subcription" : "/sign-in";
+
   return (
     <nav className="hidden lg:flex w-full max-w-xs">
       <div className="flex items-center gap-4">
@@ -28,6 +30,13 @@ const DesktopNavigationMenu = async () => {
             {nav.name}
           </Link>
         ))}
+
+        <Link
+          href={subscriptionHref}
+          className="text-sm font-medium hover:text-slate-500 transition-all"
+        >
+          Subscription
+        </Link>
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>

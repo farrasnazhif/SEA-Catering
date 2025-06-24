@@ -22,10 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { StarIcon } from "lucide-react";
-import { useState } from "react";
 
 const TestimonialForm = () => {
-  const [open, setOpen] = useState(false);
   return (
     <Dialog>
       <DialogTrigger asChild>
