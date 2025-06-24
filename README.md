@@ -2,6 +2,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+First, you need to set up your env configuration:
+
+```c
+NEXT_PUBLIC_APP_NAME=<yourappname>
+NEXT_PUBLIC_APP_DESCRIPTION=<yourappdescription>
+NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+
+DATABASE_URL=<neondatabaseurl>
+
+NEXTAUTH_SECRET=<nextauthssl.
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_URL_INTERNAL=http://localhost:3000
+```
+
 First, run the development server:
 
 ```bash
