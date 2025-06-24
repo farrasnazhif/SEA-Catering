@@ -2,8 +2,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, you need to set up your env configuration:
+First, you need to install dependencies and set up your env configuration:
 
+- Install dependencies by running `npm install` on your terminal.
+
+- Set up env configuration by creating `.env` file. Make sure you don't create the file inside the `app` directory.
+- This is how you will set you `.env` file.
 ```c
 NEXT_PUBLIC_APP_NAME=<yourappname>
 NEXT_PUBLIC_APP_DESCRIPTION=<yourappdescription>
@@ -11,12 +15,16 @@ NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 
 DATABASE_URL=<neondatabaseurl>
 
-NEXTAUTH_SECRET=<nextauthssl.
+NEXTAUTH_SECRET=<nextauthssl>
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_URL_INTERNAL=http://localhost:3000
 ```
 
-First, run the development server:
+- How can i get the `DATABASE_URL` and `NEXTAUTH_SECRET` ?
+  - you can get the `DATABASE_URL` from [`vercel website`](https://vercel.com/). Sign your account to vercel and go to the storage navigation. In storage section, you will see neon         database and you will get the `DATABASE_URL` after you create the neon database.
+  - for `NEXTAUTH_SECRET`, just run this command `openssl rand -base64 32` and the url will appear on your terminal. Make sure you already run `npm install`.
+
+Second, run the development server:
 
 ```bash
 npm run dev
