@@ -65,6 +65,7 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       throw error;
     }
 
-    return { success: false, message: formatError(error) };
+    const { message, errors } = formatError(error);
+    return { success: false, message, errors };
   }
 }

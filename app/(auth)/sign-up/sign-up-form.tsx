@@ -33,7 +33,7 @@ const SignUpForm = () => {
     <form action={action}>
       <input type="hidden" name="callbackUrl" value={callbackUrl} />
 
-      <div className="space-y-6 ">
+      <div className="space-y-6 md:w-[20rem]">
         <div>
           <Input
             id="name"
@@ -45,6 +45,11 @@ const SignUpForm = () => {
             autoComplete="name"
             defaultValue={signUpDefaultValues.name}
           />
+          {data?.errors?.name && (
+            <p className="text-sm text-center text-red-500 mt-2 space-y-0">
+              {data.errors.name}
+            </p>
+          )}
         </div>
 
         <div>
@@ -58,7 +63,13 @@ const SignUpForm = () => {
             autoComplete="email"
             defaultValue={signUpDefaultValues.email}
           />
+          {data?.errors?.email && (
+            <p className="text-sm text-center text-red-500 mt-2">
+              {data.errors.email}
+            </p>
+          )}
         </div>
+
         <div>
           <Input
             id="password"
@@ -70,7 +81,13 @@ const SignUpForm = () => {
             autoComplete="password"
             defaultValue={signUpDefaultValues.password}
           />
+          {data?.errors?.password && (
+            <p className="text-sm text-center text-red-500 mt-2">
+              {data.errors.password}
+            </p>
+          )}
         </div>
+
         <div>
           <Input
             id="confirmPassword"
@@ -82,13 +99,19 @@ const SignUpForm = () => {
             autoComplete="confirmPassword"
             defaultValue={signUpDefaultValues.confirmPassword}
           />
+          {data?.errors?.confirmPassword && (
+            <p className="text-sm text-center text-red-500 mt-2">
+              {data.errors.confirmPassword}
+            </p>
+          )}
         </div>
+
         <div>
           <SignUnButton />
         </div>
 
         {data && !data.success && (
-          <div className="text-center text-destructive">{data.message}</div>
+          <div className="text-sm text-center text-red-500">{data.message}</div>
         )}
 
         <div className="text-center text-muted-foreground">
