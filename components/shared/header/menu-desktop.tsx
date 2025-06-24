@@ -16,7 +16,7 @@ const navigations = [{ name: "Home", href: "/" }];
 const DesktopNavigationMenu = async () => {
   const session = await auth();
 
-  const subscriptionHref = session ? "/subcription" : "/sign-in";
+  const subscriptionHref = session ? "/subscription" : "/sign-in";
 
   return (
     <nav className="hidden lg:flex w-full max-w-xs">

@@ -117,7 +117,6 @@ const MobileNavigationMenu = async () => {
             </AccordionItem>
           </Accordion>
 
-          {/* Sign In Button shown only when user is not logged in */}
           {!session && (
             <Link href="/sign-in" className="w-full mt-4">
               <Button
@@ -139,10 +138,20 @@ const MobileNavigationMenu = async () => {
             />
           </Link>
 
-          <Link href="/subscription" className="flex items-center w-full gap-4">
-            <BadgeCheck className="w-6 h-6" strokeWidth={1.3} />
-            <p className="font-semibold">Subscription</p>
-          </Link>
+          {!session ? (
+            <Link href="/sign-in" className="flex items-center w-full gap-4">
+              <BadgeCheck className="w-6 h-6" strokeWidth={1.3} />
+              <p className="font-semibold">Subscription</p>
+            </Link>
+          ) : (
+            <Link
+              href="/subscription"
+              className="flex items-center w-full gap-4"
+            >
+              <BadgeCheck className="w-6 h-6" strokeWidth={1.3} />
+              <p className="font-semibold">Subscription</p>
+            </Link>
+          )}
 
           <SheetDescription />
         </SheetContent>
