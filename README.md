@@ -7,7 +7,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 1. Install dependencies by running ```npm install``` on your terminal.
 
 2. Set your env configuration by creating `.env` file. Make sure you don't create the file inside the `app` directory.
-- Copy this to your `.env` file. Besides `http://localhost:3000`, Don't forget to change all the dependencies inside it,
+- Copy this to your `.env` file. Besides `http://localhost:3000`, Don't forget to change all the dependencies inside it.
   
 ```c
 NEXT_PUBLIC_APP_NAME=<yourappname>
