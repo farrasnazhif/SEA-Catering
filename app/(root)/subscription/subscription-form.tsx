@@ -50,30 +50,6 @@ const SubscriptionForm = () => {
         <form action="">
           <div className="space-y-6">
             <div>
-              <Label>Fullname</Label>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                className="p-5 mt-2"
-                placeholder="Enter your fullname"
-                required
-              />
-            </div>
-
-            <div>
-              <Label>Phone number</Label>
-              <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                className="p-5 mt-2"
-                placeholder="Enter your phone"
-                required
-              />
-            </div>
-
-            <div>
               <Label className="mb-2">Meal Plan</Label>
               <Select>
                 <SelectTrigger className="p-5">
@@ -118,25 +94,18 @@ const SubscriptionForm = () => {
                     className="flex items-center gap-2 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50"
                   >
                     <Checkbox id={`day-${day}`} />
-                    <p className="text-sm font-medium">{day}</p>
+                    <p className="text-[12px] md:text-sm font-medium">{day}</p>
                   </Label>
                 ))}
               </div>
             </div>
 
-            <div>
-              <Label>Delivery Address</Label>
-              <Input
-                id="address"
-                name="address"
-                type="text"
-                className="p-5 mt-2"
-                placeholder="Enter your address"
-                required
-              />
-            </div>
-
-            <div className="mt-6">
+            <div className="mt-4 flex gap-2">
+              <Link href="/about-you">
+                <Button type="submit" variant="outline" className="gap-2">
+                  Back
+                </Button>
+              </Link>
               <Link href="/place-order">
                 <Button type="submit" className="gap-2">
                   Proceed
