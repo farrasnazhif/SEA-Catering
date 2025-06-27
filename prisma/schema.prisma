@@ -23,6 +23,7 @@ model User {
   password      String?
   role          String    @default("user")
   address       Json?     @db.Json
+  phone         String?
   createdAt     DateTime  @default(now()) @db.Timestamp(6)
   updatedAt     DateTime  @updatedAt
   account       Account[]

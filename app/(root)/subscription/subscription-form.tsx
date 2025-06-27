@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 const mealPlans = [
   { label: "Diet Plan - Rp30.000", value: "Diet Plan" },
@@ -35,7 +36,26 @@ const mealTypes = [
 
 const deliveryDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
+const allergies = ["Dairy", "Gluten", "Peanuts", "Chicken", "Beef", "Pork"];
+
 const SubscriptionForm = () => {
+  const [selectedAllergies, setSelectedAllergies] = useState<string[]>([]);
+  const [customAllergy, setCustomAllergy] = useState("");
+
+  const handleToggleAllergy = (item: string) => {
+    setSelectedAllergies((prev) =>
+      prev.includes(item) ? prev.filter((a) => a !== item) : [...prev, item]
+    );
+  };
+
+  const handleAddCustomAllergy = () => {
+    const trimmed = customAllergy.trim();
+    if (trimmed && !selectedAllergies.includes(trimmed)) {
+      setSelectedAllergies([...selectedAllergies, trimmed]);
+    }
+    setCustomAllergy("");
+  };
+
   return (
     <div className="mx-auto px-6 wrapper text-black mt-8 mb-12 max-w-3xl">
       <div className="flex-col flex-center gap-6">
@@ -98,6 +118,69 @@ const SubscriptionForm = () => {
                   </Label>
                 ))}
               </div>
+            </div>
+
+            <div>
+              <Label>Allergies or Restrictions</Label>
+              <div className="flex flex-wrap justify-center gap-3 mt-2">
+                {allergies.map((item) => (
+                  <Label
+                    key={item}
+                    className="flex items-center gap-2 rounded-lg border p-3 hover:bg-accent/50"
+                  >
+                    <Checkbox
+                      checked={selectedAllergies.includes(item)}
+                      onCheckedChange={() => handleToggleAllergy(item)}
+                    />
+                    <p className="text-sm font-medium">{item}</p>
+                  </Label>
+                ))}
+              </div>
+
+              <div className="flex gap-2 mt-4">
+                <Input
+                  type="text"
+                  value={customAllergy}
+                  onChange={(e) => setCustomAllergy(e.target.value)}
+                  placeholder="Add others"
+                  className="p-5"
+                />
+                <Button
+                  type="button"
+                  onClick={handleAddCustomAllergy}
+                  variant="default"
+                  className="p-5"
+                >
+                  Add
+                </Button>
+              </div>
+
+              {selectedAllergies.length > 0 && (
+                <div className="mt-3 text-sm text-muted-foreground max-w-[38rem]">
+                  <p className="font-medium mb-1">Selected Restrictions:</p>
+                  <div className="flex justify-center flex-wrap gap-2">
+                    {selectedAllergies.map((a, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center  gap-1 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm mt-2"
+                      >
+                        {a}
+                        <button
+                          type="button"
+                          className="ml-1 text-blue-500 hover:text-red-500"
+                          onClick={() =>
+                            setSelectedAllergies((prev) =>
+                              prev.filter((item) => item !== a)
+                            )
+                          }
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="mt-4 flex gap-2">
