@@ -18,3 +18,16 @@ export const signUpFormSchema = z
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
+
+export const insertOrderSchema = z.object({
+  userId: z.string(),
+  itemsPrice: z.number(),
+  totalPrice: z.number(),
+});
+
+export const insertOrderItemSchema = z.object({
+  productId: z.string(),
+  slug: z.string(),
+  name: z.string(),
+  price: z.number(),
+});
