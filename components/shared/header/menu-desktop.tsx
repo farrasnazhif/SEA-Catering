@@ -7,7 +7,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { PhoneCall, UserIcon } from "lucide-react";
+import { PhoneCall } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 

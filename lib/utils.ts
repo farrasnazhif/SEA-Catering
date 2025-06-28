@@ -11,6 +11,7 @@ type FormErrorObject = {
   errors?: Record<string, string>;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatError(error: any): FormErrorObject {
   if (error instanceof ZodError) {
     const fieldErrors: Record<string, string> = {};
