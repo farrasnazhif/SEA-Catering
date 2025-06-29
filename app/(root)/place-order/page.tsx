@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/table";
 import { getUserById } from "@/lib/actions/user.action";
 import { Subscription } from "@/types";
+import convertIDR from "@/utils/currency";
+
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -82,7 +84,9 @@ const PlaceOrderPage = async () => {
                       <TableCell>
                         {capitalize(userSubscription.mealPlan)}
                       </TableCell>
-                      <TableCell>{userSubscription.price}</TableCell>
+                      <TableCell>
+                        {convertIDR(userSubscription.price)}
+                      </TableCell>
                       <TableCell>
                         {formatArray(userSubscription.mealTypes)}
                       </TableCell>
@@ -103,9 +107,11 @@ const PlaceOrderPage = async () => {
                 <div className="flex justify-between">
                   <div>Items</div>
                   <div>
-                    {userSubscription.price *
-                      userSubscription.mealTypes.length *
-                      userSubscription.deliveryDays.length}
+                    {convertIDR(
+                      userSubscription.price *
+                        userSubscription.mealTypes.length *
+                        userSubscription.deliveryDays.length
+                    )}
                   </div>
                 </div>
                 <div className="flex justify-between font-bold">
