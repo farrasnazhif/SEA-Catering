@@ -64,12 +64,18 @@ export const config = {
       session.user.id = token.sub;
       session.user.role = token.role;
       session.user.name = token.name;
+      session.user.phone = token.phone;
+      session.user.address = token.address;
+      session.user.allergies = token.allergies;
 
       // console.log(token);
 
       // If there is an update, set the user name
       if (trigger === "update") {
         session.user.name = user.name;
+        session.user.phone = token.phone;
+        session.user.address = token.address;
+        session.user.allergies = token.allergies;
       }
 
       return session;
@@ -81,6 +87,9 @@ export const config = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.phone = user.phone;
+        token.address = user.address;
+        token.allergies = user.allergies;
 
         // If user has no name, then use the email
         if (user.name === "NO_NAME") {
@@ -97,6 +106,9 @@ export const config = {
       // Handle session updates
       if (session?.user.name && trigger === "update") {
         token.name = session.user.name;
+        token.phone = session.user.phone;
+        token.address = session.user.address;
+        token.allergies = session.user.allergies;
       }
 
       return token;

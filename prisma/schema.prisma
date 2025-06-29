@@ -22,7 +22,7 @@ model User {
   image         String?
   password      String?
   role          String    @default("user")
-  address       Json?     @db.Json
+  address       String?
   phone         String?
   allergies     String[]  @default([])
   createdAt     DateTime  @default(now()) @db.Timestamp(6)

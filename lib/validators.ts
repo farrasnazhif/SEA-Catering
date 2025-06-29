@@ -19,7 +19,9 @@ export const signUpFormSchema = z
     path: ["confirmPassword"],
   });
 
-export const aboutYouSchema = z.object({
+export const personalizeSchema = z.object({
+  name: z.string().min(3, "Name must be at least 3 characters"),
+  email: z.string().min(3, "Email must be at least 3 characters"),
   phone: z.string().min(8, "Invalid phone number"),
   address: z.string().min(1, "Address is required"),
   allergies: z.array(z.string()),

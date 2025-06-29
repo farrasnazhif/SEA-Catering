@@ -53,3 +53,7 @@ export function formatError(error: any): FormErrorObject {
 
   return { message: msg };
 }
+
+export function getErrorMessage(msg: string | { message: string }): string {
+  return typeof msg === "string" ? msg : msg.message;
+}

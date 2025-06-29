@@ -145,7 +145,7 @@ const MobileNavigationMenu = async () => {
             </Link>
           ) : (
             <Link
-              href="/subscription"
+              href="/personalize"
               className="flex items-center w-full gap-4"
             >
               <BadgeCheck className="w-6 h-6" strokeWidth={1.3} />

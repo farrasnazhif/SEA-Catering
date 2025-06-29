@@ -1,7 +1,7 @@
 import {
-  aboutYouSchema,
   insertOrderItemSchema,
   insertOrderSchema,
+  personalizeSchema,
 } from "@/lib/validators";
 import { z } from "zod";
 
@@ -19,4 +19,4 @@ export type Order = z.infer<typeof insertOrderSchema> & {
   user: { name: string; email: string };
 };
 
-export type AboutYou = z.infer<typeof aboutYouSchema>;
+export type Personalize = z.infer<typeof personalizeSchema>;
