@@ -1,4 +1,6 @@
-import { auth } from "@/auth";
+"use client";
+
+import { useEffect, useState } from "react";
 import CheckoutSteps from "@/components/shared/checkout-steps";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,12 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getUserById } from "@/lib/actions/user.action";
-import { Subscription } from "@/types";
 import convertIDR from "@/utils/currency";
-
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { Subscription } from "@/types";
+import PlaceOrderSubmit from "./place-order-submit";
+import { getUserByIdClient } from "@/lib/actions/user.action";
+import { User } from "next-auth";
 
 const capitalize = (text: string) =>
   text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
@@ -35,17 +38,42 @@ const formatTotalPrice = (
   })}`;
 };
 
-const PlaceOrderPage = async () => {
-  const session = await auth();
-  const userId = session?.user?.id;
+const PlaceOrderPage = () => {
+  const router = useRouter();
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
-  if (!userId) throw new Error("User not found");
+  useEffect(() => {
+    const loadData = async () => {
+      //take subscription data from the localStorage
+      const saved = localStorage.getItem("pendingSubscription");
+      if (saved) {
+        try {
+          const parsed: Subscription = JSON.parse(saved);
+          setSubscription(parsed);
+        } catch (err) {
+          console.error("Invalid subscription data", err);
+          router.push("/personalize");
+          return;
+        }
+      } else {
+        router.push("/personalize");
+        return;
+      }
 
-  const user = await getUserById(userId);
+      try {
+        const res = await getUserByIdClient();
+        if (res) setUser(res);
+      } catch (error) {
+        console.error("Failed to fetch user", error);
+        router.push("/personalize");
+      }
+    };
 
-  if (!session) redirect("/personalize");
+    loadData();
+  }, [router]);
 
-  const userSubscription = user.subscription as Subscription;
+  if (!subscription || !user) return null;
 
   return (
     <>
@@ -81,17 +109,13 @@ const PlaceOrderPage = async () => {
                   </TableHeader>
                   <TableBody>
                     <TableRow>
+                      <TableCell>{capitalize(subscription.mealPlan)}</TableCell>
+                      <TableCell>{convertIDR(subscription.price)}</TableCell>
                       <TableCell>
-                        {capitalize(userSubscription.mealPlan)}
+                        {formatArray(subscription.mealTypes)}
                       </TableCell>
                       <TableCell>
-                        {convertIDR(userSubscription.price)}
-                      </TableCell>
-                      <TableCell>
-                        {formatArray(userSubscription.mealTypes)}
-                      </TableCell>
-                      <TableCell>
-                        {formatArray(userSubscription.deliveryDays)}
+                        {formatArray(subscription.deliveryDays)}
                       </TableCell>
                     </TableRow>
                   </TableBody>
@@ -108,9 +132,9 @@ const PlaceOrderPage = async () => {
                   <div>Items</div>
                   <div>
                     {convertIDR(
-                      userSubscription.price *
-                        userSubscription.mealTypes.length *
-                        userSubscription.deliveryDays.length
+                      subscription.price *
+                        subscription.mealTypes.length *
+                        subscription.deliveryDays.length
                     )}
                   </div>
                 </div>
@@ -118,12 +142,13 @@ const PlaceOrderPage = async () => {
                   <div>Total</div>
                   <span className="font-semibold">
                     {formatTotalPrice(
-                      userSubscription.price,
-                      userSubscription.mealTypes,
-                      userSubscription.deliveryDays
+                      subscription.price,
+                      subscription.mealTypes,
+                      subscription.deliveryDays
                     )}
                   </span>
                 </div>
+                <PlaceOrderSubmit subscription={subscription} />
               </CardContent>
             </Card>
           </div>

@@ -4,9 +4,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
 import {
   Form,
   FormControl,
@@ -25,12 +23,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowRight, Loader } from "lucide-react";
-import { updateUserSubsription } from "@/lib/actions/user.action";
+import { ArrowRight } from "lucide-react";
 import { subscriptionDefaultValues } from "@/lib/constants";
 import { subscriptionSchema } from "@/lib/validators";
 import { Subscription } from "@/types";
-import { getErrorMessage } from "@/lib/utils";
 
 const mealPlans = [
   { label: "Diet Plan - Rp30.000", value: "Diet Plan" },
@@ -68,8 +64,6 @@ const getMealPlanPrice = (plan: string) => {
 
 const SubscriptionForm = ({ subscription }: { subscription: Subscription }) => {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
-
   const form = useForm<z.infer<typeof subscriptionSchema>>({
     resolver: zodResolver(subscriptionSchema),
     defaultValues: subscription || subscriptionDefaultValues,
@@ -83,16 +77,9 @@ const SubscriptionForm = ({ subscription }: { subscription: Subscription }) => {
   }, [selectedPlan, form]);
 
   const onSubmit = async (values: z.infer<typeof subscriptionSchema>) => {
-    startTransition(async () => {
-      const res = await updateUserSubsription(values);
-
-      if (!res.success) {
-        toast.error(getErrorMessage(res?.message));
-        return;
-      }
-
-      router.push("/place-order");
-    });
+    // save data temporarily in localStorage
+    localStorage.setItem("pendingSubscription", JSON.stringify(values));
+    router.push("/place-order");
   };
 
   return (
@@ -153,8 +140,10 @@ const SubscriptionForm = ({ subscription }: { subscription: Subscription }) => {
                           checked={field.value?.includes(meal.id)}
                           onCheckedChange={(checked) => {
                             const newValue = checked
-                              ? [...field.value, meal.id]
-                              : field.value.filter((val) => val !== meal.id);
+                              ? [...(field.value ?? []), meal.id]
+                              : (field.value ?? []).filter(
+                                  (val) => val !== meal.id
+                                );
                             field.onChange(newValue);
                           }}
                         />
@@ -188,8 +177,10 @@ const SubscriptionForm = ({ subscription }: { subscription: Subscription }) => {
                           checked={field.value?.includes(day)}
                           onCheckedChange={(checked) => {
                             const newValue = checked
-                              ? [...field.value, day]
-                              : field.value.filter((val) => val !== day);
+                              ? [...(field.value ?? []), day]
+                              : (field.value ?? []).filter(
+                                  (val) => val !== day
+                                );
                             field.onChange(newValue);
                           }}
                         />
@@ -212,12 +203,8 @@ const SubscriptionForm = ({ subscription }: { subscription: Subscription }) => {
               >
                 Back
               </Button>
-              <Button type="submit" className="gap-2" disabled={isPending}>
-                {isPending ? (
-                  <Loader className="w-4 h-4 animate-spin" />
-                ) : (
-                  <ArrowRight className="w-4 h-4" />
-                )}{" "}
+              <Button type="submit" className="gap-2">
+                <ArrowRight className="w-4 h-4" />
                 Continue
               </Button>
             </div>

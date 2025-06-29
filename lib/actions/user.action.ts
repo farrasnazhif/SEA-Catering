@@ -11,7 +11,8 @@ import { auth, signIn, signOut } from "@/auth";
 import { prisma } from "@/db/prisma";
 import { hashSync } from "bcrypt-ts-edge";
 import { formatError } from "../utils";
-import { Personalize, Subscription } from "@/types";
+import { Subscription } from "@/types";
+import { Prisma } from "@prisma/client";
 
 export async function signInWithCredentials(
   prevState: unknown,
@@ -119,25 +120,45 @@ export async function updateUserPersonalize(user: {
 export async function updateUserSubsription(data: Subscription) {
   try {
     const session = await auth();
-    const currentUser = await prisma.user.findFirst({
-      where: { id: session?.user?.id },
+    if (!session?.user?.id) throw new Error("Unauthorized");
+
+    const currentUser = await prisma.user.findUnique({
+      where: { id: session.user.id },
     });
 
     if (!currentUser) throw new Error("User not found");
 
-    const subscription = subscriptionSchema.parse(data);
+    const validated = subscriptionSchema.parse(data);
+
+    const previousSubs = Array.isArray(currentUser.subscription)
+      ? currentUser.subscription
+      : [];
+
+    const updatedSubscriptions: Prisma.InputJsonValue[] = [
+      ...previousSubs.map((item) => JSON.parse(JSON.stringify(item))),
+      JSON.parse(JSON.stringify(validated)),
+    ];
 
     await prisma.user.update({
       where: { id: currentUser.id },
       data: {
-        subscription: subscription,
+        subscription: updatedSubscriptions,
       },
     });
-
-    console.log("Saving subscription:", subscription);
 
     return { success: true, message: "User updated successfully" };
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
+}
+
+export async function getUserByIdClient() {
+  const session = await auth();
+  if (!session?.user?.id) return null;
+
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+  });
+
+  return user;
 }

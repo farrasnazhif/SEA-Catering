@@ -25,7 +25,7 @@ model User {
   address       String?
   phone         String?
   allergies     String[]  @default([])
-  subscription  Json?     @db.Json
+  subscription  Json[]    @default([])
   createdAt     DateTime  @default(now()) @db.Timestamp(6)
   updatedAt     DateTime  @updatedAt
   account       Account[]
