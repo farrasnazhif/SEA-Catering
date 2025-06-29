@@ -27,15 +27,8 @@ export const personalizeSchema = z.object({
   allergies: z.array(z.string()),
 });
 
-export const insertOrderSchema = z.object({
-  userId: z.string(),
-  itemsPrice: z.number(),
-  totalPrice: z.number(),
-});
-
-export const insertOrderItemSchema = z.object({
-  productId: z.string(),
-  slug: z.string(),
-  name: z.string(),
-  price: z.number(),
+export const subscriptionSchema = z.object({
+  mealPlan: z.string().min(1, "Meal plan is required"),
+  mealTypes: z.array(z.string()).min(1, "Meal types is required"),
+  deliveryDays: z.array(z.string()).min(1, "Delivery days is required"),
 });

@@ -2,6 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -10,8 +18,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { updateUserSubsription } from "@/lib/actions/user.action";
+import { subscriptionDefaultValues } from "@/lib/constants";
+import { getErrorMessage } from "@/lib/utils";
+import { subscriptionSchema } from "@/lib/validators";
+import { Subscription } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRight, Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const mealPlans = [
   { label: "Diet Plan - Rp30.000", value: "Diet Plan" },
@@ -34,7 +52,29 @@ const mealTypes = [
 
 const deliveryDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-const SubscriptionForm = () => {
+const SubscriptionForm = ({ subscription }: { subscription: Subscription }) => {
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof subscriptionSchema>>({
+    resolver: zodResolver(subscriptionSchema),
+    defaultValues: subscription || subscriptionDefaultValues,
+  });
+
+  const [isPending, startTransition] = useTransition();
+
+  const onSubmit = async (values: z.infer<typeof subscriptionSchema>) => {
+    startTransition(async () => {
+      const res = await updateUserSubsription(values);
+
+      if (!res.success) {
+        toast.error(getErrorMessage(res?.message));
+        return;
+      }
+
+      router.push("/place-order");
+    });
+  };
+
   return (
     <div className="mx-auto px-6 wrapper text-black mt-8 mb-12 max-w-3xl">
       <div className="flex-col flex-center gap-6">
@@ -46,74 +86,123 @@ const SubscriptionForm = () => {
           </p>
         </div>
 
-        <form action="">
-          <div className="space-y-6">
-            <div>
-              <Label className="mb-2">Meal Plan</Label>
-              <Select>
-                <SelectTrigger className="p-5">
-                  <SelectValue placeholder="Select your plan" />
-                </SelectTrigger>
-                <SelectContent>
-                  {mealPlans.map((plan) => (
-                    <SelectItem key={plan.value} value={plan.value}>
-                      {plan.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label>Meal Types</Label>
-              <div className="flex flex-col gap-3 mt-2">
-                {mealTypes.map((meal) => (
-                  <Label
-                    key={meal.id}
-                    className="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="mealPlan"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Meal Plan</FormLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
                   >
-                    <Checkbox id={meal.id} />
-                    <div className="grid gap-1.5">
-                      <p className="text-sm font-medium">{meal.title}</p>
-                      <p className="text-muted-foreground text-sm">
-                        {meal.desc}
-                      </p>
-                    </div>
-                  </Label>
-                ))}
-              </div>
-            </div>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your plan" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {mealPlans.map((plan) => (
+                        <SelectItem key={plan.value} value={plan.value}>
+                          {plan.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div>
-              <Label>Delivery Days</Label>
-              <div className="flex flex-wrap justify-center gap-3 mt-2">
-                {deliveryDays.map((day) => (
-                  <Label
-                    key={day}
-                    className="flex items-center gap-2 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50"
-                  >
-                    <Checkbox id={`day-${day}`} />
-                    <p className="text-[12px] md:text-sm font-medium">{day}</p>
-                  </Label>
-                ))}
-              </div>
-            </div>
+            <FormField
+              control={form.control}
+              name="mealTypes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Meal Types</FormLabel>
+                  <div className="flex flex-col gap-3 mt-2">
+                    {mealTypes.map((meal) => (
+                      <Label
+                        key={meal.id}
+                        className="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 cursor-pointer"
+                      >
+                        <Checkbox
+                          checked={field.value?.includes(meal.id)}
+                          onCheckedChange={(checked) => {
+                            const newValue = checked
+                              ? [...field.value, meal.id]
+                              : field.value.filter((val) => val !== meal.id);
+                            field.onChange(newValue);
+                          }}
+                        />
+                        <div className="grid gap-1.5">
+                          <p className="text-sm font-medium">{meal.title}</p>
+                          <p className="text-muted-foreground text-sm">
+                            {meal.desc}
+                          </p>
+                        </div>
+                      </Label>
+                    ))}
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="deliveryDays"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Delivery Days</FormLabel>
+                  <div className="flex flex-wrap justify-center gap-3 mt-2">
+                    {deliveryDays.map((day) => (
+                      <Label
+                        key={day}
+                        className="flex items-center gap-2 rounded-lg border p-3 hover:bg-accent/50 cursor-pointer"
+                      >
+                        <Checkbox
+                          checked={field.value?.includes(day)}
+                          onCheckedChange={(checked) => {
+                            const newValue = checked
+                              ? [...field.value, day]
+                              : field.value.filter((val) => val !== day);
+                            field.onChange(newValue);
+                          }}
+                        />
+                        <p className="text-[12px] md:text-sm font-medium">
+                          {day}
+                        </p>
+                      </Label>
+                    ))}
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <div className="mt-4 flex gap-2">
-              <Link href="/personalize">
-                <Button type="submit" variant="outline" className="gap-2">
-                  Back
-                </Button>
-              </Link>
-              <Link href="/place-order">
-                <Button type="submit" className="gap-2">
-                  Proceed
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => router.push("/personalize")}
+              >
+                Back
+              </Button>
+              <Button type="submit" className="gap-2" disabled={isPending}>
+                {isPending ? (
+                  <Loader className="w-4 h-4 animate-spin" />
+                ) : (
                   <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
+                )}{" "}
+                Proceed
+              </Button>
             </div>
-          </div>
-        </form>
+          </form>
+        </Form>
       </div>
     </div>
   );

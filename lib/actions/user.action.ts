@@ -5,12 +5,13 @@ import {
   personalizeSchema,
   signInFormSchema,
   signUpFormSchema,
+  subscriptionSchema,
 } from "../validators";
 import { auth, signIn, signOut } from "@/auth";
 import { prisma } from "@/db/prisma";
 import { hashSync } from "bcrypt-ts-edge";
 import { formatError } from "../utils";
-import { Personalize } from "@/types";
+import { Personalize, Subscription } from "@/types";
 
 export async function signInWithCredentials(
   prevState: unknown,
@@ -106,6 +107,30 @@ export async function updateUserPersonalize(user: {
         phone: user.phone,
         address: user.address,
         allergies: user.allergies,
+      },
+    });
+
+    return { success: true, message: "User updated successfully" };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
+export async function updateUserSubsription(data: Subscription) {
+  try {
+    const session = await auth();
+    const currentUser = await prisma.user.findFirst({
+      where: { id: session?.user?.id },
+    });
+
+    if (!currentUser) throw new Error("User not found");
+
+    const subscription = subscriptionSchema.parse(data);
+
+    await prisma.user.update({
+      where: { id: currentUser.id },
+      data: {
+        subscription: subscription,
       },
     });
 

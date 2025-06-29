@@ -61,7 +61,7 @@ const PersonalizeForm = () => {
     startTransition(async () => {
       const res = await updateUserPersonalize(values);
 
-      if (!res?.success) {
+      if (!res.success) {
         toast.error(getErrorMessage(res?.message));
         return;
       }
