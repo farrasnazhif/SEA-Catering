@@ -1,7 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import {
   Form,
   FormControl,
@@ -10,6 +15,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -18,18 +25,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ArrowRight, Loader } from "lucide-react";
 import { updateUserSubsription } from "@/lib/actions/user.action";
 import { subscriptionDefaultValues } from "@/lib/constants";
-import { getErrorMessage } from "@/lib/utils";
 import { subscriptionSchema } from "@/lib/validators";
 import { Subscription } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, Loader } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
+import { getErrorMessage } from "@/lib/utils";
 
 const mealPlans = [
   { label: "Diet Plan - Rp30.000", value: "Diet Plan" },
@@ -52,15 +53,34 @@ const mealTypes = [
 
 const deliveryDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
+const getMealPlanPrice = (plan: string) => {
+  switch (plan) {
+    case "Diet Plan":
+      return 30000;
+    case "Protein Plan":
+      return 40000;
+    case "Royal Plan":
+      return 60000;
+    default:
+      return 0;
+  }
+};
+
 const SubscriptionForm = ({ subscription }: { subscription: Subscription }) => {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof subscriptionSchema>>({
     resolver: zodResolver(subscriptionSchema),
     defaultValues: subscription || subscriptionDefaultValues,
   });
 
-  const [isPending, startTransition] = useTransition();
+  const selectedPlan = form.watch("mealPlan");
+
+  useEffect(() => {
+    const price = getMealPlanPrice(selectedPlan ?? "");
+    form.setValue("price", price);
+  }, [selectedPlan, form]);
 
   const onSubmit = async (values: z.infer<typeof subscriptionSchema>) => {
     startTransition(async () => {
@@ -198,7 +218,7 @@ const SubscriptionForm = ({ subscription }: { subscription: Subscription }) => {
                 ) : (
                   <ArrowRight className="w-4 h-4" />
                 )}{" "}
-                Proceed
+                Continue
               </Button>
             </div>
           </form>

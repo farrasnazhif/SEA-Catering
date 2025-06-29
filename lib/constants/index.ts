@@ -22,6 +22,7 @@ export const USER_ROLES = process.env.USER_ROLES
 
 export const subscriptionDefaultValues = {
   mealPlan: "",
+  price: 0,
   mealTypes: [],
   deliveryDays: [],
 };

@@ -134,6 +134,8 @@ export async function updateUserSubsription(data: Subscription) {
       },
     });
 
+    console.log("Saving subscription:", subscription);
+
     return { success: true, message: "User updated successfully" };
   } catch (error) {
     return { success: false, message: formatError(error) };
