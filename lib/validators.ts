@@ -19,6 +19,12 @@ export const signUpFormSchema = z
     path: ["confirmPassword"],
   });
 
+export const aboutYouSchema = z.object({
+  phone: z.string().min(8, "Invalid phone number"),
+  address: z.string().min(1, "Address is required"),
+  allergies: z.array(z.string()),
+});
+
 export const insertOrderSchema = z.object({
   userId: z.string(),
   itemsPrice: z.number(),
