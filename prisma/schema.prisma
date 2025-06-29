@@ -25,11 +25,11 @@ model User {
   address       String?
   phone         String?
   allergies     String[]  @default([])
+  subscription  Json?     @db.Json
   createdAt     DateTime  @default(now()) @db.Timestamp(6)
   updatedAt     DateTime  @updatedAt
   account       Account[]
   session       Session[]
-  subscription  Order[]
 }
 
 model Account {
@@ -72,47 +72,16 @@ model VerificationToken {
 }
 
 model Product {
-  id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String
-  slug        String      @unique(map: "product_slug_idx")
+  slug        String   @unique(map: "product_slug_idx")
   images      String[]
   description String
   stock       Int
-  price       Float       @default(0)
-  rating      Float       @default(0)
-  numReviews  Int         @default(0)
+  price       Float    @default(0)
+  rating      Float    @default(0)
+  numReviews  Int      @default(0)
   isFeatured  Boolean
   banner      String?
-  createdAt   DateTime    @default(now()) @db.Timestamp(6)
-  OrderItem   OrderItem[]
-}
-
-model Order {
-  id              String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId          String      @db.Uuid
-  shippingAddress Json        @db.Json
-  paymentResult   Json?       @db.Json
-  itemsPrice      Float
-  totalPrice      Float
-  isPaid          Boolean     @default(false)
-  paidAt          DateTime?   @db.Timestamp(6)
-  deliveryDays    String[]    @default([])
-  mealTypes       String[]    @default([])
-  isDelivered     Boolean     @default(false)
-  deliveredAt     DateTime?   @db.Timestamp(6)
-  createdAt       DateTime    @default(now()) @db.Timestamp(6)
-  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  orderitems      OrderItem[]
-}
-
-model OrderItem {
-  orderId   String  @db.Uuid
-  productId String  @db.Uuid
-  price     Float
-  name      String
-  slug      String
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@id([orderId, productId], map: "orderitems_orderId_productId_pk")
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
 }

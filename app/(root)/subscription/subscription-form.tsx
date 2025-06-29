@@ -100,7 +100,7 @@ const SubscriptionForm = () => {
             </div>
 
             <div className="mt-4 flex gap-2">
-              <Link href="/about-you">
+              <Link href="/personalize">
                 <Button type="submit" variant="outline" className="gap-2">
                   Back
                 </Button>
