@@ -62,7 +62,11 @@ const getMealPlanPrice = (plan: string) => {
   }
 };
 
-const SubscriptionForm = ({ subscription }: { subscription: Subscription }) => {
+const SubscriptionForm = ({
+  subscription,
+}: {
+  subscription: Subscription | null;
+}) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof subscriptionSchema>>({
     resolver: zodResolver(subscriptionSchema),

@@ -2,7 +2,6 @@
 
 import { isRedirectError } from "next/dist/client/components/redirect";
 import {
-  personalizeSchema,
   signInFormSchema,
   signUpFormSchema,
   subscriptionSchema,

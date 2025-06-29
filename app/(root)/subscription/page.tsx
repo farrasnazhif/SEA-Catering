@@ -12,10 +12,17 @@ const SubscriptionPage = async () => {
 
   const user = await getUserById(userId);
 
+  //take the last subscription
+  const subscriptions = Array.isArray(user.subscription)
+    ? user.subscription
+    : [];
+
+  const latestSubscription = subscriptions.at(-1) as Subscription | undefined;
+
   return (
     <>
       <CheckoutSteps current={1} />
-      <SubscriptionForm subscription={user.subscription as Subscription} />
+      <SubscriptionForm subscription={latestSubscription ?? null} />
     </>
   );
 };
