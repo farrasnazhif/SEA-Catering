@@ -13,7 +13,6 @@ import { useForm } from "react-hook-form";
 import { personalizeSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUserPersonalize } from "@/lib/actions/user.action";
-import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -54,7 +53,6 @@ const ProfileForm = () => {
     }
   }, [session?.user, form]);
 
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = async (values: z.infer<typeof personalizeSchema>) => {
@@ -79,7 +77,7 @@ const ProfileForm = () => {
 
       await update(newSession);
 
-      router.push("/subscription");
+      toast(getErrorMessage(res?.message));
     });
   };
 
