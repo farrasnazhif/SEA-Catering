@@ -32,4 +32,6 @@ export const subscriptionSchema = z.object({
   price: z.coerce.number().min(1, "Price is required"),
   mealTypes: z.array(z.string()).min(1, "Meal types is required"),
   deliveryDays: z.array(z.string()).min(1, "Delivery days is required"),
+  createdAt: z.string().optional(),
+  finishedAt: z.string().optional(),
 });

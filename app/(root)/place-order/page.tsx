@@ -50,7 +50,22 @@ const PlaceOrderPage = () => {
       if (saved) {
         try {
           const parsed: Subscription = JSON.parse(saved);
-          setSubscription(parsed);
+
+          // createdAt (tomorrow) and finishedAt (1 month after tomorrow)
+          const now = new Date();
+          // tomorrow
+          now.setDate(now.getDate() + 1);
+
+          const finishedAt = new Date(now);
+          finishedAt.setMonth(finishedAt.getMonth() + 1); // 1 month later
+
+          const subscriptionWithDate = {
+            ...parsed,
+            createdAt: now.toISOString(),
+            finishedAt: finishedAt.toISOString(),
+          };
+
+          setSubscription(subscriptionWithDate);
         } catch (err) {
           console.error("Invalid subscription data", err);
           router.push("/personalize");

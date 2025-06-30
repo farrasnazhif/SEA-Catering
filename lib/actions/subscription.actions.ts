@@ -55,3 +55,33 @@ export async function deleteSubscriptionByIndex(index: number) {
 
   return { success: true };
 }
+
+export const getAllSubscriptions = async () => {
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      subscription: true,
+    },
+  });
+
+  const result = users.flatMap((user) =>
+    (user.subscription as any[]).map((sub, index) => ({
+      id: `${user.id}-${index}`,
+      userId: user.id,
+      userName: user.name,
+      userEmail: user.email,
+      createdAt: sub.createdAt || null,
+      finishedAt: sub.finishedAt || null,
+      mealPlan: sub.mealPlan,
+      price: sub.price,
+      mealTypes: sub.mealTypes,
+      deliveryDays: sub.deliveryDays,
+      isPaid: false,
+      isDelivered: false,
+    }))
+  );
+
+  return result;
+};

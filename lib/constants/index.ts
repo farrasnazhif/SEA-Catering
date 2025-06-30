@@ -25,4 +25,6 @@ export const subscriptionDefaultValues = {
   price: 0,
   mealTypes: [],
   deliveryDays: [],
+  createdAt: "",
+  finishedAt: "",
 };

@@ -87,12 +87,6 @@
   }
 }
 
-@layer base {
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
 .upload-field .text-black {
   color: #000;
 }
