@@ -1,11 +1,12 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/lib/constants";
 import Image from "next/image";
 
 const ThankYouPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center  px-4 py-[13rem] min-h-screen text-center space-y-6">
       <Image
         src="/images/logo.svg"
         width={48}
@@ -13,8 +14,9 @@ const ThankYouPage = () => {
         alt={`${APP_NAME} logo`}
         priority={true}
       />
-      <div className="p-6 w-1/3 rounded-lg shadow-md text-center">
-        <h1 className="text-xl font-bold mb-4">
+
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 space-y-4">
+        <h1 className="text-2xl font-bold">
           Woohoo! Your subscription is confirmed!
         </h1>
         <p className="text-muted-foreground text-sm">
@@ -22,7 +24,7 @@ const ThankYouPage = () => {
         </p>
         <Button
           variant="outline"
-          className="mt-4 ml-2"
+          className="w-full sm:w-auto"
           onClick={() => (window.location.href = "/user/plan")}
         >
           Check Your Meal Plan
