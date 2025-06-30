@@ -4,16 +4,10 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import SignUpForm from "./sign-up-form";
 
-const SignUpPage = async (props: {
-  searchParams: Promise<{
-    callbackUrl: string;
-  }>;
-}) => {
-  const { callbackUrl } = await props.searchParams;
-
+const SignUpPage = async () => {
   const session = await auth();
   if (session) {
-    return redirect(callbackUrl || "/");
+    return redirect("/");
   }
   return (
     <div className="min-h-screen flex items-center justify-center  px-4">

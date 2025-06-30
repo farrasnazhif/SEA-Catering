@@ -51,7 +51,7 @@ const UserButton = async () => {
             User Profile
           </Link>
           <Link
-            href="/profile/plan"
+            href="/user/plan"
             className="block px-2 py-1 text-sm hover:bg-slate-50 rounded"
           >
             My Plan
