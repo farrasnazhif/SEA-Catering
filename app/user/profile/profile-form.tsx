@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, Loader } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
@@ -89,7 +89,7 @@ const ProfileForm = () => {
     <div className="mx-auto px-6  text-black mt-8 mb-12 max-w-3xl">
       <div className="flex-col flex-center gap-6">
         <div className="text-center">
-          <h2 className="h3-bold">Hello, {firstName}! Here's Your Info</h2>
+          <h2 className="h3-bold">Hello, {firstName}! Here&apos;s Your Info</h2>
           <p className="text-muted-foreground text-sm">
             Need to make a change? Update your info below.
           </p>

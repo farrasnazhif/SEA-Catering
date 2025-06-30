@@ -1,4 +1,3 @@
-import CheckoutSteps from "@/components/shared/checkout-steps";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import ProfileForm from "./profile-form";

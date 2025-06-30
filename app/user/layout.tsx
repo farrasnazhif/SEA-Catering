@@ -2,6 +2,7 @@ import { APP_NAME } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 import UserNav from "./user-nav";
+import { Button } from "@/components/ui/button";
 
 export default function UserLayout({
   children,
@@ -22,9 +23,11 @@ export default function UserLayout({
             />
           </Link>
           <UserNav className="mx-6" />
-          {/* <div className="ml-auto flex items-center spcae-x-4">
-            <Menu products={allProducts} />
-          </div> */}
+          <div className="ml-auto flex items-center spcae-x-4">
+            <Link href="/">
+              <Button variant="default">Back To Home</Button>
+            </Link>
+          </div>
         </div>
       </div>
       <div className="flex-1 space-y-4 p-8 pt-6 container mx-auto">

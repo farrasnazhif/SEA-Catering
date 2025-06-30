@@ -40,7 +40,8 @@ export async function deleteSubscriptionByIndex(index: number) {
 
   if (!user) throw new Error("User not found");
 
-  const subs = user.subscription as any[]; // assume it's stored as JSON[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const subs = user.subscription as any[];
   if (!Array.isArray(subs)) throw new Error("Invalid subscription data");
 
   const newSubs = subs.filter((_, i) => i !== index);
