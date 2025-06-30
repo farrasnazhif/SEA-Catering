@@ -12,7 +12,6 @@ import {
   getMySubscription,
 } from "@/lib/actions/subscription.actions";
 import convertIDR from "@/utils/currency";
-import Link from "next/link";
 
 const PlanPage = async () => {
   const subscriptions = await getMySubscription();
