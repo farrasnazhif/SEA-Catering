@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
-import DeleteDialog from "@/components/shared/delete-dialog";
-import { Button } from "@/components/ui/button";
+
 import {
   Table,
   TableBody,
@@ -9,9 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getAllSubscriptions } from "@/lib/actions/subscription.actions";
-import Link from "next/link";
+import {
+  deleteSubscriptionByUser,
+  getAllSubscriptions,
+} from "@/lib/actions/subscription.actions";
 import { Metadata } from "next";
+import { formatDateTime } from "@/lib/utils";
+import DeleteDialog from "@/components/shared/admin-delete-dialog";
 
 export const metadata: Metadata = {
   title: "Orders",
@@ -35,12 +38,12 @@ const AdminOrdersPage = async () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Buyer</TableHead>
-              <TableHead>Total</TableHead>
-              <TableHead>Paid</TableHead>
-              <TableHead>Delivered</TableHead>
+              <TableHead>User</TableHead>
+              <TableHead>Meal Plan</TableHead>
+              <TableHead>Meal Types</TableHead>
+              <TableHead>Delivery Days</TableHead>
+              <TableHead>Start</TableHead>
+              <TableHead>End</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -48,12 +51,23 @@ const AdminOrdersPage = async () => {
             {subscriptions.map((sub, idx) => (
               <TableRow key={sub.id}>
                 <TableCell>{sub.userName}</TableCell>
-                {/* <TableCell>{convertIDR(sub.totalPrice)}</TableCell> */}
-                {sub.mealPlan}
+
+                <TableCell>{sub.mealPlan}</TableCell>
+
+                <TableCell>{sub.mealTypes.join(", ")}</TableCell>
+
+                <TableCell>{sub.deliveryDays.join(", ")}</TableCell>
+
+                <TableCell>{formatDateTime(sub.createdAt).dateOnly}</TableCell>
+
+                <TableCell>{formatDateTime(sub.finishedAt).dateOnly}</TableCell>
+
                 <TableCell className="space-x-2">
-                  <Button asChild variant="outline" size="sm">
-                    <Link href={`/order/${sub.id}`}>Details</Link>
-                  </Button>
+                  <DeleteDialog
+                    userId={sub.userId}
+                    index={idx}
+                    action={deleteSubscriptionByUser}
+                  />
                 </TableCell>
               </TableRow>
             ))}

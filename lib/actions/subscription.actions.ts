@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/db/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function getMySubscription() {
   const session = await auth();
@@ -85,5 +86,46 @@ export const getAllSubscriptions = async () => {
     }))
   );
 
+  result.sort((a, b) => {
+    const dateA = new Date(a.createdAt || 0).getTime();
+    const dateB = new Date(b.createdAt || 0).getTime();
+    return dateB - dateA;
+  });
+
   return result;
+};
+
+export const deleteSubscriptionByUser = async (
+  userId: string,
+  index: number
+): Promise<{ success: boolean; message?: string }> => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { subscription: true },
+    });
+
+    if (!user || !user.subscription) {
+      return { success: false, message: "User or subscriptions not found" };
+    }
+
+    const subscriptions = user.subscription as any[];
+
+    if (index < 0 || index >= subscriptions.length) {
+      return { success: false, message: "Invalid subscription index" };
+    }
+
+    // Remove subscription at the given index
+    const updatedSubscriptions = subscriptions.filter((_, i) => i !== index);
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: { subscription: updatedSubscriptions },
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting subscription:", error);
+    return { success: false, message: "Internal server error" };
+  }
 };

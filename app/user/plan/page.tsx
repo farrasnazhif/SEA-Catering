@@ -1,4 +1,4 @@
-import DeleteDialog from "@/components/shared/delete-dialog";
+import DeleteDialog from "@/components/shared/user-delete-dialog";
 import {
   Table,
   TableBody,
