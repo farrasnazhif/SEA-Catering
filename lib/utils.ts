@@ -59,7 +59,7 @@ export function getErrorMessage(msg: string | { message: string }): string {
 }
 
 // Format date and times (indonesia)
-export const formatDateTime = (dateString: Date) => {
+export const formatDateTime = (dateString: string) => {
   const dateTimeOptions: Intl.DateTimeFormatOptions = {
     month: "short", // abbreviated month name (e.g., 'Oct')
     year: "numeric", // abbreviated month name (e.g., 'Oct')

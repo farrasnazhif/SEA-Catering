@@ -11,6 +11,7 @@ import {
   deleteSubscriptionByIndex,
   getMySubscription,
 } from "@/lib/actions/subscription.actions";
+import { formatDateTime } from "@/lib/utils";
 import convertIDR from "@/utils/currency";
 
 const PlanPage = async () => {
@@ -29,7 +30,7 @@ const PlanPage = async () => {
               <TableHead>Meal Type</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Delivery Days</TableHead>
-              <TableHead>Delivered</TableHead>
+              <TableHead>Delivered Until</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -40,9 +41,7 @@ const PlanPage = async () => {
                 <TableCell>{sub.mealTypes.join(", ")}</TableCell>
                 <TableCell>{convertIDR(sub.price)}</TableCell>
                 <TableCell>{sub.deliveryDays.join(", ")}</TableCell>
-                <TableCell className="text-muted-foreground">
-                  Coming Soon
-                </TableCell>
+                <TableCell>{formatDateTime(sub.finishedAt).dateOnly}</TableCell>
                 <TableCell>
                   <DeleteDialog
                     index={index}

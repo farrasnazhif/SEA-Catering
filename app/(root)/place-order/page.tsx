@@ -144,12 +144,25 @@ const PlaceOrderPage = () => {
             <Card>
               <CardContent className="p-4 gap-4 space-y-4">
                 <div className="flex justify-between">
-                  <div>Items</div>
+                  <div>Monthly Subscription</div>
                   <div>
                     {convertIDR(
                       subscription.price *
                         subscription.mealTypes.length *
-                        subscription.deliveryDays.length
+                        subscription.deliveryDays.length *
+                        4
+                    )}
+                  </div>
+                </div>
+                <div className="flex justify-between">
+                  <div>Tax + Shipping</div>
+                  <div>
+                    {convertIDR(
+                      subscription.price *
+                        subscription.mealTypes.length *
+                        subscription.deliveryDays.length *
+                        4 *
+                        0.075
                     )}
                   </div>
                 </div>

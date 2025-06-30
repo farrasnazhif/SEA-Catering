@@ -23,6 +23,8 @@ export async function getMySubscription() {
     price: number;
     mealTypes: string[];
     deliveryDays: string[];
+    createdAt: string;
+    finishedAt: string;
   }[];
 
   return subscriptions;
