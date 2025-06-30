@@ -2,7 +2,6 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/db/prisma";
-import { Prisma } from "@prisma/client";
 
 export async function getMySubscription() {
   const session = await auth();
@@ -24,6 +23,7 @@ export async function getMySubscription() {
     price: number;
     mealTypes: string[];
     deliveryDays: string[];
+    totalPrice: number;
     createdAt: string;
     finishedAt: string;
   }[];

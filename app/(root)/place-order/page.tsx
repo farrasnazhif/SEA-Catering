@@ -64,6 +64,7 @@ const PlaceOrderPage = () => {
             createdAt: now.toISOString(),
             finishedAt: finishedAt.toISOString(),
           };
+          // console.log( subscriptionWithDate);
 
           setSubscription(subscriptionWithDate);
         } catch (err) {
