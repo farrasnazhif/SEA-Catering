@@ -1,31 +1,70 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { insertTestimonialSchema } from "@/lib/validators";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createUpdateTestimonial } from "@/lib/actions/testimonial.actions";
+import { getErrorMessage } from "@/lib/utils";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
+  DialogTrigger,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
 } from "@/components/ui/dialog";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
+  SelectTrigger,
   SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { StarIcon } from "lucide-react";
-import { useSession } from "next-auth/react";
 
-const TestimonialForm = () => {
+type Props = {
+  products: { id: string; name: string }[];
+};
+
+const TestimonialForm = ({ products }: Props) => {
   const { data: session } = useSession();
+
+  const {
+    control,
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<z.infer<typeof insertTestimonialSchema>>({
+    resolver: zodResolver(insertTestimonialSchema),
+    defaultValues: {
+      productId: "",
+      description: "",
+      rating: 0,
+    },
+  });
+
+  const onSubmit: SubmitHandler<
+    z.infer<typeof insertTestimonialSchema>
+  > = async (values) => {
+    const res = await createUpdateTestimonial(values);
+
+    if (!res.success) {
+      toast.error(getErrorMessage(res.message));
+      return;
+    }
+
+    toast.success("Review submitted successfully");
+    reset();
+  };
 
   return (
     <Dialog>
@@ -35,53 +74,98 @@ const TestimonialForm = () => {
         )}
       </DialogTrigger>
       <DialogContent>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader className="mb-8">
             <DialogTitle>Write a review</DialogTitle>
             <DialogDescription>
               Share your thoughts with other customers
             </DialogDescription>
           </DialogHeader>
+
           <div className="grid gap-4">
+            {/* Select Product */}
             <div className="grid gap-3">
-              <Label htmlFor="name-1">Your Meal Plan</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your plan" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Diet Plan">Diet Plan</SelectItem>
-                  <SelectItem value="Protein Plan">Protein Plan</SelectItem>
-                  <SelectItem value="Royal Plan">Royal Plan</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label>Select Product</Label>
+              <Controller
+                control={control}
+                name="productId"
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select product" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {products.map((product) => (
+                        <SelectItem key={product.id} value={product.id}>
+                          {product.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.productId && (
+                <p className="text-red-500 text-sm">
+                  {errors.productId.message}
+                </p>
+              )}
             </div>
+
+            {/* Description */}
             <div className="grid gap-3">
-              <Label htmlFor="username-1">Description</Label>
-              <Input />
+              <Label>Description</Label>
+              <Input
+                {...register("description")}
+                placeholder="Write your review..."
+              />
+              {errors.description && (
+                <p className="text-red-500 text-sm">
+                  {errors.description.message}
+                </p>
+              )}
             </div>
+
+            {/* Rating */}
             <div className="grid gap-3">
-              <Label htmlFor="username-1">Rating</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your rating" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <SelectItem key={index} value={(index + 1).toString()}>
-                      <div className="flex items-center gap-2">
-                        {index + 1}{" "}
-                        <StarIcon className="inline h-4 w-4" fill="yellow" />
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Label>Rating</Label>
+              <Controller
+                control={control}
+                name="rating"
+                render={({ field }) => (
+                  <Select
+                    onValueChange={(val) => field.onChange(Number(val))}
+                    value={field.value ? field.value.toString() : ""}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your rating" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[1, 2, 3, 4, 5].map((num) => (
+                        <SelectItem key={num} value={num.toString()}>
+                          <div className="flex items-center gap-2">
+                            {num}
+                            <StarIcon
+                              className="inline h-4 w-4"
+                              fill="yellow"
+                            />
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.rating && (
+                <p className="text-red-500 text-sm">{errors.rating.message}</p>
+              )}
             </div>
           </div>
+
           <DialogFooter className="mt-8">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button type="button" variant="outline">
+                Cancel
+              </Button>
             </DialogClose>
             <Button type="submit">Submit</Button>
           </DialogFooter>

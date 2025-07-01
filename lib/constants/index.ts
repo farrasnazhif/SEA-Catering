@@ -28,3 +28,8 @@ export const subscriptionDefaultValues = {
   createdAt: "",
   finishedAt: "",
 };
+
+export const testimonalFormDefaultValues = {
+  description: "",
+  rating: 0,
+};
