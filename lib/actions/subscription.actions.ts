@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/db/prisma";
+import { Subscription } from "@/types";
 
 export async function getMySubscription() {
   const session = await auth();
@@ -70,6 +71,7 @@ export const getAllSubscriptions = async () => {
   });
 
   const result = users.flatMap((user) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (user.subscription as any[]).map((sub, index) => ({
       id: `${user.id}-${index}`,
       userId: user.id,
@@ -109,7 +111,7 @@ export const deleteSubscriptionByUser = async (
       return { success: false, message: "User or subscriptions not found" };
     }
 
-    const subscriptions = user.subscription as any[];
+    const subscriptions = user.subscription as Subscription[];
 
     if (index < 0 || index >= subscriptions.length) {
       return { success: false, message: "Invalid subscription index" };

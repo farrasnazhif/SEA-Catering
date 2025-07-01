@@ -14,10 +14,8 @@ import {
 } from "@/lib/actions/subscription.actions";
 import { formatDateTime } from "@/lib/utils";
 import convertIDR from "@/utils/currency";
-import { BadgeDollarSign, Barcode, CreditCardIcon, Users } from "lucide-react";
+import { BadgeDollarSign, CreditCardIcon, Users } from "lucide-react";
 import { Metadata } from "next";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import DeleteDialog from "@/components/shared/admin-delete-dialog";
 
 export const metadata: Metadata = {
@@ -33,6 +31,7 @@ const AdminOverviewPage = async () => {
 
   const subscriptions = await getAllSubscriptions();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const computeTotal = (sub: any) => {
     const price =
       typeof sub.price === "number" ? sub.price : parseFloat(sub.price);
@@ -50,13 +49,6 @@ const AdminOverviewPage = async () => {
   }, 0);
 
   const ordersCount = subscriptions.length;
-
-  const latestSales = [...subscriptions]
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    )
-    .slice(0, 5);
 
   const uniqueUserIds = new Set(
     subscriptions.map((sub) => sub?.id || sub.userId)

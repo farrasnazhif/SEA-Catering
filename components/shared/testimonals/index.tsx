@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
 import TestimonialForm from "./testimonial-form";
 import { SessionProvider } from "next-auth/react";
-import { getAllProducts, getProductById } from "@/lib/actions/product.actions";
+import { getAllProducts } from "@/lib/actions/product.actions";
 import TestimonialsList from "./testimonial-list";
 
-const Testimonials = async ({ productId }: { productId: string }) => {
+const Testimonials = async () => {
   const session = await auth();
 
   const products = await getAllProducts();

@@ -4,8 +4,9 @@ import { insertTestimonialSchema } from "../validators";
 import { auth } from "@/auth";
 import { prisma } from "@/db/prisma";
 import { formatError } from "../utils";
+import { Testimonial } from "@/types";
 
-export const createUpdateTestimonial = async (values: any) => {
+export const createUpdateTestimonial = async (values: Testimonial) => {
   try {
     const session = await auth();
 
