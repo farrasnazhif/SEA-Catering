@@ -144,6 +144,10 @@ main();
 
 - To seed the data, run `npx tsx ./db/seed` on your terminal. Don't worry if you are asked to download typescript, just download it.
 
+# View Database
+
+- You can see your database by running `npx prisma studio` on your terminal.
+
 # View Admin Page
 
 - If you're curious with the admin page, you can sign in with one of my admin user.
@@ -158,11 +162,3 @@ users: [
     },
   ],
 ```
-
-**After the first step settled, run the development server:**
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
