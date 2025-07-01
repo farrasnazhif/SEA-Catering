@@ -22,7 +22,7 @@ const TestimonialsList = async () => {
                 key={t.id}
                 className="basis-auto flex justify-center "
               >
-                <div className="bg-slate-100 border shadow-md rounded-lg p-6 w-[15rem] h-full flex flex-col items-center text-center ">
+                <div className="bg-white border shadow-sm rounded-lg p-6 w-[15rem] h-full flex flex-col items-center text-center ">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     {firstName}
                   </h3>

@@ -32,13 +32,13 @@ const UserButton = async () => {
         <DropdownMenuTrigger className="focus:outline-none">
           <Avatar>
             <AvatarImage src={userImage || ""} />
-            <AvatarFallback className="bg-neutral-400 shadow-md text-black">
+            <AvatarFallback className="bg-black shadow-md text-white">
               {firstName.charAt(0).toUpperCase() ?? "U"}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className=" space-y-2 p-2">
-          <div className="bg-slate-100 p-2 rounded-sm">
+        <DropdownMenuContent className=" space-y-2 p-2 bg-orange-100">
+          <div className="bg-white p-2 rounded-sm">
             <div className="text-sm font-medium">{session.user?.name}</div>
             <div className="text-sm text-muted-foreground">
               {session.user?.email}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import Menu from "./menu";
 import UserButton from "./user-button";
+import Image from "next/image";
 
 const Header = () => {
   return (
@@ -11,7 +12,12 @@ const Header = () => {
       <div className="wrapper flex justify-between items-center border-b-2">
         <div className="flex-start">
           <Link href="/" className="flex-start ml-4 ">
-            <h1 className="h3-bold">{APP_NAME}</h1>
+            <Image
+              src="/images/logo.svg"
+              alt={APP_NAME}
+              height={48}
+              width={48}
+            />
           </Link>
         </div>
 

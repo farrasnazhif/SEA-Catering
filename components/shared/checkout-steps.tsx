@@ -9,7 +9,7 @@ const CheckoutSteps = ({ current = 0 }) => {
           <div
             className={cn(
               "p-2 w-56 rounded-full text-center text-sm",
-              index === current ? "bg-secondary" : ""
+              index === current ? "bg-black text-white" : ""
             )}
           >
             {step}

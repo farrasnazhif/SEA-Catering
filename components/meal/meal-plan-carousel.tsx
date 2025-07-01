@@ -66,7 +66,9 @@ const MealPlanCarousel = async () => {
 
         {/* right */}
         <div className="lg:w-1/2 w-full space-y-3 px-4">
-          <h2 className="text-3xl font-bold ">Daily Meals, Made Easy</h2>
+          <h2 className="text-2xl font-bold mt-6 text-center">
+            Daily Meals, Made Easy
+          </h2>
           {plans.map(({ id, title, subtitle }) => (
             <div key={id}>
               <div className="flex-start mb-2 gap-2">

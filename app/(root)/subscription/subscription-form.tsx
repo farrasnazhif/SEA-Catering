@@ -111,11 +111,14 @@ const SubscriptionForm = ({
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select your plan" />
+                      <SelectTrigger className="border border-slate-400">
+                        <SelectValue
+                          placeholder="Select your plan"
+                          className="border border-slate-400"
+                        />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
+                    <SelectContent className="bg-orange-100 ">
                       {mealPlans.map((plan) => (
                         <SelectItem key={plan.value} value={plan.value}>
                           {plan.label}
@@ -138,7 +141,7 @@ const SubscriptionForm = ({
                     {mealTypes.map((meal) => (
                       <Label
                         key={meal.id}
-                        className="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 cursor-pointer"
+                        className="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 cursor-pointer border-slate-400"
                       >
                         <Checkbox
                           checked={field.value?.includes(meal.id)}
@@ -175,7 +178,7 @@ const SubscriptionForm = ({
                     {deliveryDays.map((day) => (
                       <Label
                         key={day}
-                        className="flex items-center gap-2 rounded-lg border p-3 hover:bg-accent/50 cursor-pointer"
+                        className="flex items-center gap-2 rounded-lg border p-3 hover:bg-accent/50 cursor-pointer border-slate-400"
                       >
                         <Checkbox
                           checked={field.value?.includes(day)}
@@ -204,6 +207,7 @@ const SubscriptionForm = ({
                 type="button"
                 variant="outline"
                 onClick={() => router.push("/personalize")}
+                className="border border-slate-400"
               >
                 Back
               </Button>

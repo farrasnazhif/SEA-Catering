@@ -95,23 +95,33 @@ const PlaceOrderPage = () => {
     <>
       <CheckoutSteps current={2} />
       <div className="wrapper">
-        <h1 className="py-4 text-2xl h2-bold">Your Order</h1>
+        <div className="text-center py-8">
+          <h2 className=" text-2xl h2-bold">Confirm Your Meal Plan</h2>
+          <p className="text-sm text-muted-foreground">
+            Just one step to get your own meal plan!
+          </p>
+        </div>
         <div className="grid md:grid-cols-3 gap-5">
           <div className="md:col-span-2 overflow-x-auto space-y-4">
-            <Card>
-              <CardContent className="p-4 gap-4">
+            <Card className=" border border-slate-400">
+              <CardContent className="p-4 gap-4 ">
                 <h2 className="text-xl pb-4 font-bold">Shipping Address</h2>
                 <p>{user.name}</p>
                 <p>{user.address}</p>
                 <div className="mt-3">
                   <Link href="/personalize">
-                    <Button variant="outline">Edit</Button>
+                    <Button
+                      variant="default"
+                      className="border border-slate-400 "
+                    >
+                      Edit
+                    </Button>
                   </Link>
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="border border-slate-400">
               <CardContent className="p-4 gap-4">
                 <h2 className="text-xl pb-4 font-bold">Order Items</h2>
                 <Table>
@@ -142,7 +152,7 @@ const PlaceOrderPage = () => {
 
           {/* Order Summary */}
           <div>
-            <Card>
+            <Card className="border border-slate-400">
               <CardContent className="p-4 gap-4 space-y-4">
                 <div className="flex justify-between">
                   <div>Monthly Subscription</div>

@@ -11,7 +11,7 @@ const links = [
     href: "/user/profile",
   },
   {
-    title: "Your Plan",
+    title: "My Plan",
     href: "/user/plan",
   },
 ];

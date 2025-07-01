@@ -107,7 +107,11 @@ const ProfileForm = () => {
                   <FormItem className="w-full">
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input disabled {...field} />
+                      <Input
+                        disabled
+                        {...field}
+                        className="border border-slate-400"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -123,7 +127,11 @@ const ProfileForm = () => {
                   <FormItem className="w-full">
                     <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter full name" {...field} />
+                      <Input
+                        placeholder="Enter full name"
+                        className="border border-slate-400"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -142,6 +150,7 @@ const ProfileForm = () => {
                       <Input
                         placeholder="Enter phone number"
                         type="tel"
+                        className="border border-slate-400"
                         {...field}
                       />
                     </FormControl>
@@ -161,6 +170,7 @@ const ProfileForm = () => {
                     <FormControl>
                       <Input
                         placeholder="Enter your delivery address"
+                        className="border border-slate-400"
                         {...field}
                       />
                     </FormControl>
@@ -180,7 +190,7 @@ const ProfileForm = () => {
                     {allergies.map((item) => (
                       <Label
                         key={item}
-                        className="flex items-center gap-2 rounded-lg border p-3 hover:bg-accent/50 cursor-pointer"
+                        className="flex items-center gap-2 rounded-lg border p-3 hover:bg-accent/50 cursor-pointer border-slate-400"
                       >
                         <Checkbox
                           checked={field.value?.includes(item)}
@@ -202,7 +212,7 @@ const ProfileForm = () => {
                       value={customAllergy}
                       onChange={(e) => setCustomAllergy(e.target.value)}
                       placeholder="Add others"
-                      className="p-5"
+                      className="border border-slate-400 p-5"
                     />
                     <Button
                       type="button"

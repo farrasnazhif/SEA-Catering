@@ -33,7 +33,7 @@ const MobileNavigationMenu = async () => {
           </button>
         </SheetTrigger>
 
-        <SheetContent className="flex flex-col items-start">
+        <SheetContent className="flex flex-col items-start bg-orange-100">
           <SheetTitle>Menu</SheetTitle>
           <Accordion type="single" collapsible className="w-full">
             {session && (
