@@ -26,9 +26,9 @@ NEXTAUTH_URL_INTERNAL=http://localhost:3000
   - you can get the `DATABASE_URL` from [`vercel website`](https://vercel.com/). Sign your account to vercel and go to the storage navigation. In storage section, you will see neon database and you will get the `DATABASE_URL` after you create the neon database.
   - for `NEXTAUTH_SECRET`, just run this command `openssl rand -base64 32` and the url will appear on your terminal. Make sure you already run `npm install`.
 
-**Seeding Data to Database**
+# Seeding Data to Database
 
-- Here is how you can seed your data through code, it's useful when you want to create _admin user_ and initial data.
+- Here is how you can seed your data through code, it's useful when you want to create **admin user** and initial data.
 
 1. Make a file named `sample-data.ts` and `seed.ts` inside db folder.
 
@@ -119,6 +119,8 @@ export default sampleData;
 
 4. After that, seed the data into the database.
 
+- Write this code in `seed,ts`.
+
 ```c
   import { PrismaClient } from "@prisma/client";
   import sampleData from "./sample-data";
@@ -140,7 +142,9 @@ export default sampleData;
 main();
 ```
 
-**View Admin Page**
+- To seed the data, run `npx tsx ./db/seed` on your terminal. Don't worry if you are asked to download typescript, just download it.
+
+# View Admin Page
 
 - If you're curious with the admin page, you can sign in with one of my admin user.
 
