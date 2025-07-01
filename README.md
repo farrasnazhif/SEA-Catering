@@ -150,7 +150,7 @@ main();
 
 # View Admin Page
 
-- If you're curious with the admin page, you can sign in with one of my admin user.
+- If you're curious with the admin page, you can sign in with one of my admin account.
 
 ```c
 users: [
@@ -163,4 +163,4 @@ users: [
   ],
 ```
 
-- You'll see admin option in your user avatar
+- You'll see admin option if you click your account avatar.
