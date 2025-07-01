@@ -73,19 +73,19 @@ model VerificationToken {
 }
 
 model Product {
-  id          String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name        String
-  slug        String        @unique(map: "product_slug_idx")
-  images      String[]
-  description String
-  stock       Int
-  price       Float         @default(0)
-  rating      Float         @default(0)
-  numReviews  Int           @default(0)
-  isFeatured  Boolean
-  banner      String?
-  createdAt   DateTime      @default(now()) @db.Timestamp(6)
-  Testimonial Testimonial[]
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String
+  slug            String        @unique(map: "product_slug_idx")
+  images          String[]
+  description     String
+  stock           Int
+  price           Float         @default(0)
+  rating          Float         @default(0)
+  numTestimonials Int           @default(0)
+  isFeatured      Boolean
+  banner          String?
+  createdAt       DateTime      @default(now()) @db.Timestamp(6)
+  Testimonial     Testimonial[]
 }
 
 model Testimonial {
