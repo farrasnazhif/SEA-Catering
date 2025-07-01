@@ -162,3 +162,5 @@ users: [
     },
   ],
 ```
+
+- You'll see admin option in your user avatar
