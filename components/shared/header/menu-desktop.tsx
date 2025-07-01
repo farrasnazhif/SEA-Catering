@@ -43,7 +43,7 @@ const DesktopNavigationMenu = async () => {
               <NavigationMenuTrigger className="text-sm font-medium hover:text-slate-500 transition-all p-0">
                 Meal Plans
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-white rounded shadow-md p-4">
+              <NavigationMenuContent className="bg-orange-100 rounded shadow-md p-4">
                 <ul className="flex flex-col gap-2 min-w-[180px]">
                   <li>
                     <NavigationMenuLink asChild>
@@ -87,7 +87,7 @@ const DesktopNavigationMenu = async () => {
               <NavigationMenuTrigger className="text-sm font-medium hover:text-slate-500 transition-all p-0">
                 Contact Us
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-white rounded shadow-md p-4">
+              <NavigationMenuContent className=" rounded shadow-md p-4 bg-orange-100">
                 <ul className="flex flex-col gap-2 min-w-[180px]">
                   <li>
                     <NavigationMenuLink asChild>
