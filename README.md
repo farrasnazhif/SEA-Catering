@@ -28,7 +28,7 @@ NEXTAUTH_URL_INTERNAL=http://localhost:3000
 
 # Seeding Data to Database
 
-- Here is how you can seed your data through code, it's useful when you want to create **admin user** and initial data.
+- Here is how you can seed your data through code, it's useful when you want to create **admin user** and initialize data.
 
 1. Make a file named `sample-data.ts` and `seed.ts` inside db folder.
 
@@ -37,12 +37,12 @@ NEXTAUTH_URL_INTERNAL=http://localhost:3000
 - Before you seed the data, make sure you have your own database schema
 
 - To make the database schema, run this command on your terminal
-  - `npx prisma init`: you will perceive a prisma folder.
+  - `npx prisma init`: you will perceive prisma folder.
   - In `schema.prisma` (inside prisma folder) you will have to create your own schema.
   - After you create the schema, run `npx prisma generate` to generate the schema
   - Finally, create the migration by running `npx prisma migrate dev --name (your migration name)`
 
-3. Set your `sample-data.ts` file like this. On this example, i want to bring user and product data to the database.
+3. Set your `sample-data.ts` file like this. In this example, i want to bring user and product data into the database.
 
 ```c
 import { hashSync } from "bcrypt-ts-edge";
@@ -119,7 +119,7 @@ export default sampleData;
 
 4. After that, seed the data into the database.
 
-- Write this code in `seed,ts`.
+- Write this code in `seed.ts`.
 
 ```c
   import { PrismaClient } from "@prisma/client";
