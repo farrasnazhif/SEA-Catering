@@ -1,5 +1,3 @@
-"use client";
-
 import { CheckCheck } from "lucide-react";
 import Image from "next/image";
 import {
@@ -9,7 +7,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
-import PricingPlanButton from "../ui/pricing-plan-button";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import { auth } from "@/auth";
 
 const plans = [
   {
@@ -35,7 +35,9 @@ const plans = [
   },
 ];
 
-const MealPlanCarousel = () => {
+const MealPlanCarousel = async () => {
+  const session = await auth();
+
   return (
     <div className="mx-auto px-6 relative wrapper text-black mt-8 mb-8">
       <div className="flex flex-col lg:flex-row items-start gap-6 max-w-5xl mx-auto">
@@ -64,9 +66,7 @@ const MealPlanCarousel = () => {
 
         {/* right */}
         <div className="lg:w-1/2 w-full space-y-3 px-4">
-          <h2 className="text-2xl font-bold ">
-            Ease your meal with our meal plan
-          </h2>
+          <h2 className="text-3xl font-bold ">Daily Meals, Made Easy</h2>
           {plans.map(({ id, title, subtitle }) => (
             <div key={id}>
               <div className="flex-start mb-2 gap-2">
@@ -77,10 +77,16 @@ const MealPlanCarousel = () => {
               <p className="text-gray-700 text-sm">{subtitle}</p>
             </div>
           ))}
-          <div className="lg:flex-start flex-center">
-            <PricingPlanButton className="mt-4 lg:mt-3 " />
-          </div>
         </div>
+      </div>
+      <div className="flex-center mt-8">
+        <Button asChild className="text-lg p-6 font-semibold">
+          {session ? (
+            <Link href="/subscription">Choose Your Plan</Link>
+          ) : (
+            <Link href="/sign-in">Choose Your Plan</Link>
+          )}
+        </Button>
       </div>
     </div>
   );
