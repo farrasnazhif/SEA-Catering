@@ -13,6 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Trash } from "lucide-react";
 
 const DeleteDialog = ({
   userId,
@@ -44,7 +45,7 @@ const DeleteDialog = ({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive" size="sm">
-          Delete
+          <Trash />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

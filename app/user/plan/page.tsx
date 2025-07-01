@@ -28,7 +28,7 @@ const PlanPage = async () => {
     <div className="space-y-6">
       <h2 className="h2-bold">My Plan</h2>
 
-      {/* DESKTOP TABLE */}
+      {/* DESKTOP */}
       <div className="md:overflow-x-auto hidden md:block">
         <Table>
           <TableHeader>
