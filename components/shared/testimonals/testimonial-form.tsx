@@ -22,12 +22,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { StarIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 const TestimonialForm = () => {
+  const { data: session } = useSession();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="text-lg p-6 font-semibold">Add Your Rating</Button>
+        {session && (
+          <Button className="text-lg p-6 font-semibold">Add Your Rating</Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <form>

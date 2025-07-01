@@ -1,5 +1,7 @@
+import { auth } from "@/auth";
 import { Carousel, CarouselContent, CarouselItem } from "../../ui/carousel";
 import TestimonialForm from "./testimonial-form";
+import { SessionProvider } from "next-auth/react";
 
 const users = [
   {
@@ -46,39 +48,43 @@ const users = [
   },
 ];
 
-const Testimonials = () => {
+const Testimonials = async () => {
+  const session = await auth();
+
   return (
-    <div className="mx-auto px-6 wrapper text-black mt-16 mb-8 max-w-6xl">
-      <h2 className="mdtext-2xl text-xl font-bold text-center">
-        What Our Happy Customers Say
-      </h2>
+    <SessionProvider session={session}>
+      <div className="mx-auto px-6 wrapper text-black mt-16 mb-8 max-w-6xl">
+        <h2 className="mdtext-2xl text-xl font-bold text-center">
+          What Our Happy Customers Say
+        </h2>
 
-      <div className="w-full mt-8">
-        <Carousel>
-          <CarouselContent className="gap-0">
-            {users.map((u) => (
-              <CarouselItem
-                key={u.id}
-                className="basis-auto flex justify-center"
-              >
-                <div className="bg-slate-100 rounded-lg shadow-md p-6 text-center h-full flex flex-col justify-center w-full max-w-[12rem]">
-                  <h3 className="text-lg font-semibold">{u.user}</h3>{" "}
-                  <p className="text-slate-600 text-sm mb-3">- {u.plan} -</p>
-                  <p className="text-gray-600 text-sm mb-2">{u.message}</p>
-                  <p className="text-yellow-500 text-sm">
-                    {"★".repeat(u.rating)}
-                  </p>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </div>
+        <div className="w-full mt-8">
+          <Carousel>
+            <CarouselContent className="gap-0">
+              {users.map((u) => (
+                <CarouselItem
+                  key={u.id}
+                  className="basis-auto flex justify-center"
+                >
+                  <div className="bg-slate-100 rounded-lg shadow-md p-6 text-center h-full flex flex-col justify-center w-full max-w-[12rem]">
+                    <h3 className="text-lg font-semibold">{u.user}</h3>{" "}
+                    <p className="text-slate-600 text-sm mb-3">- {u.plan} -</p>
+                    <p className="text-gray-600 text-sm mb-2">{u.message}</p>
+                    <p className="text-yellow-500 text-sm">
+                      {"★".repeat(u.rating)}
+                    </p>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
 
-      <div className="flex-center mt-8 mb-8">
-        <TestimonialForm />
+        <div className="flex-center mt-8 mb-8">
+          <TestimonialForm />
+        </div>
       </div>
-    </div>
+    </SessionProvider>
   );
 };
 
