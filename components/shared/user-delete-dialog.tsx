@@ -11,6 +11,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const DeleteDialog = ({
@@ -37,7 +38,7 @@ const DeleteDialog = ({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive" size="sm">
-          Delete
+          <Trash />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
