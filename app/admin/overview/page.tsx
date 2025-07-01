@@ -15,18 +15,14 @@ import {
 import { formatDateTime } from "@/lib/utils";
 import convertIDR from "@/utils/currency";
 import { BadgeDollarSign, CreditCardIcon, Users } from "lucide-react";
-import { Metadata } from "next";
 import DeleteDialog from "@/components/shared/admin-delete-dialog";
-
-export const metadata: Metadata = {
-  title: "Admin Dashboard",
-};
+import { redirect } from "next/navigation";
 
 const AdminOverviewPage = async () => {
   const session = await auth();
 
   if (session?.user?.role !== "admin") {
-    throw new Error("User Unauthorized");
+    redirect("/");
   }
 
   const subscriptions = await getAllSubscriptions();

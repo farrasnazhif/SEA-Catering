@@ -12,7 +12,6 @@ import {
   deleteSubscriptionByUser,
   getAllSubscriptions,
 } from "@/lib/actions/subscription.actions";
-import { Metadata } from "next";
 import { formatDateTime } from "@/lib/utils";
 import DeleteDialog from "@/components/shared/admin-delete-dialog";
 import {
@@ -23,15 +22,12 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { AlertDialogHeader } from "@/components/ui/alert-dialog";
-
-export const metadata: Metadata = {
-  title: "Orders",
-};
+import { redirect } from "next/navigation";
 
 const AdminOrdersPage = async () => {
   const session = await auth();
   if (session?.user?.role !== "admin") {
-    throw new Error("Unauthorized");
+    redirect("/");
   }
 
   const subscriptions = await getAllSubscriptions();
